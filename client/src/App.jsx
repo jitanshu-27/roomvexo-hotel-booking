@@ -4,6 +4,7 @@ import Navbar from './components/Navbar'
 import Home from './pages/Home'
 import Footer from './components/Footer'
 import Allrooms from './pages/Allrooms'
+import RoomDetails from './pages/RoomDetails'
 
 const App = () => {
   const location = useLocation()
@@ -15,6 +16,7 @@ const App = () => {
        <Routes >
           <Route path='/'element={<Home/>}/>
           <Route path='/rooms'element={<Allrooms/>}/>
+           <Route path='/rooms/:id'element={<RoomDetails/>}/>
        </Routes>
       </div>
       <Footer/>

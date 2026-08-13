@@ -38,7 +38,7 @@ import uploadArea from "./uploadArea.svg";
 import totalBookingIcon from "./totalBookingIcon.svg";
 import totalRevenueIcon from "./totalRevenueIcon.svg";
 import logo3 from "./logo3.png"
-
+import hostAvatar from './hostAvatar.png'
 
 export const assets = {
     logo,
@@ -73,7 +73,8 @@ export const assets = {
     uploadArea,
     totalBookingIcon,
     totalRevenueIcon,
-    logo3
+    logo3,
+    hostAvatar
 }
 
 export const cities = [
@@ -117,15 +118,15 @@ export const roomCommonData = [
 // User Dummy Data
 export const userDummyData = {
     "_id": "user_2unqyL4diJFP1E3pIBnasc7w8hP",
-    "username": "Great Stack",
-    "email": "user.greatstack@gmail.com",
-    "image": "https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvdXBsb2FkZWQvaW1nXzJ2N2c5YVpSSEFVYVUxbmVYZ2JkSVVuWnFzWSJ9",
+    "username": "Jitanshu",
+    "email": "user.jitanshu@272001@gmail.com",
+    "image": hostAvatar,
     "role": "hotelOwner",
     "createdAt": "2025-03-25T09:29:16.367Z",
     "updatedAt": "2025-04-10T06:34:48.719Z",
     "__v": 1,
     "recentSearchedCities": [
-        "New York"
+        "New Delhi"
     ]
 }
 
