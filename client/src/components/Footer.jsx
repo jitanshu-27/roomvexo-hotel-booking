@@ -6,11 +6,11 @@ const Footer = () => {
         <div className='bg-[#F6F9FC] text-gray-500/80 pt-8 px-6 md:px-16 lg:px-24 xl:px-32'>
             <div className='flex flex-wrap justify-between gap-12 md:gap-6'>
                 <div className='max-w-80'>
-                    <img src={assets.logo3} alt="logo" className="h-25 w-auto object-contain"/>
+                    <img src={assets.logo3} alt="logo" className="h-16 w-auto object-contain scale-[2.0] origin-left -translate-x-8 -mb-2"/>
                     <p className='text-sm'>
                         Discover the world's most extraordinary place to stay , From boutique hotels to luxary villas and private islands.
                     </p>
-                    <div className='flex items-center gap-3 mt-4'>  
+                    <div className='flex items-center gap-3 mt-4'> 
                        <img src={assets.instagramIcon} alt="instagramIcon" className='w-6'/>
                        <img src={assets.facebookIcon} alt="facebookIcon" className='w-6'/>
                        <img src={assets.twitterIcon} alt="twitterIcon" className='w-6'/>
