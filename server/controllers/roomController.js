@@ -1,4 +1,4 @@
-import Hotel from "../models/Hotel";
+import Hotel from "../models/Hotel.js";
 import { v2 as cloudinary } from "cloudinary";
 import Room from "../models/Room.js";
 
@@ -9,7 +9,7 @@ export const createRoom = async (req,res) => {
         const hotel = await Hotel.findOne({owner:req.auth.userId});
 
         if(!hotel){
-            res.json({success:false , message:"No Hotel Found"})
+            return res.json({success:false , message:"No Hotel Found"})
         }
         // upload images to cloudinary
         const  uploadImages = req.files.map( async (files)=>{
@@ -43,7 +43,7 @@ export const getRooms = async (req,res) => {
             }
         }).sort({createdAt: -1})
         res.json({success:true,rooms})
-        
+
     } catch (error) {
         res.json({success:false , message:error.message})
     }
@@ -52,7 +52,7 @@ export const getRooms = async (req,res) => {
 // Api to get all rooms for a specific hotel
 export const getOwnerRooms = async (req,res) => {
     try {
-        const hotelData = await Hotel({owner:req.auth.userId})
+        const hotelData = await Hotel.findOne({owner:req.auth.userId})
         const rooms = await Room.find({hotel:hotelData._id.toString()}).populate("hotel")
         res.json({success:true , rooms})
 
@@ -66,7 +66,7 @@ export const getOwnerRooms = async (req,res) => {
 export const toggleRoomAvailability = async (req,res) => {
     try {
         const {roomId} = req.body;
-        const roomData = await Rooms.findById(roomId);
+        const roomData = await Room.findById(roomId);
         roomData.isAvailable = !roomData.isAvailable
         await roomData.save()
         res.json({success:true, message:"Room availability Updated"})
