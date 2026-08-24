@@ -1,4 +1,3 @@
-import { use } from "react"
 
 export const getUserData = async (req , res) =>{
     try {
@@ -13,7 +12,7 @@ export const getUserData = async (req , res) =>{
 export const storeRecentSearchedCities = async (req , res) => {
     try {
         const {recentSearchedCities} = req.body;
-        const user = await req.user
+        const user = req.user
         if(user.recentSearchedCities.length < 3){
             user.recentSearchedCities.push(recentSearchedCities)
         }else{

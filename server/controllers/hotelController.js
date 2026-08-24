@@ -1,5 +1,5 @@
-import User from "../models/User";
-import Hotel from "../models/Hotel";
+import User from "../models/User.js";
+import Hotel from "../models/Hotel.js";
 
 export const registerHotel = async (req , res) => {
     try {
@@ -13,7 +13,7 @@ export const registerHotel = async (req , res) => {
         }
 
         await Hotel.create({name , address , contact , city , owner});
-        await User.findByIAndUpdate(owner,{role:"hotelOwner"});
+        await User.findByIdAndUpdate(owner,{role:"hotelOwner"});
 
         res.json({success:true , message:"Hotel Registered Successfully"})
 
