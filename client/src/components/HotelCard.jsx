@@ -34,7 +34,7 @@ const HotelCard = ({room , index}) => {
 
         <p>
             <span className="text-2xl font-semibold text-gray-800">
-                ${room.pricePerNight}
+                ₹{room.pricePerNight}
             </span>
             <span className="text-gray-500"> /night</span>
         </p>

@@ -7,7 +7,7 @@ const CheckBox = ({label, selected = false , onchange = ()=>{}})=>{
   return (
       <>
       <label className='flex gap-3 items-center cursor-pointer mt-2 text-sm'>
-      <input type='checkbox' checked={selected} onchange={(e) => onChange(e.target.checked, label)} />
+      <input type='checkbox' checked={selected} onChange={(e) => onChange(e.target.checked, label)} />
       <span className='font-light select-none'>{label}</span>
       </label>
       </>
@@ -84,7 +84,7 @@ const Allrooms = () => {
                       ))}
                      </div>
                     <div>
-                      <p className='text-xl font-medium text-gray-700'>{`$${room.pricePerNight} /Night`}</p>
+                      <p className='text-xl font-medium text-gray-700'>{`₹${room.pricePerNight} /Night`}</p>
                     </div>
                 </div>
             </div>
@@ -111,7 +111,7 @@ const Allrooms = () => {
             <div className='px-5 pt-5'>
               <p className='font-medium text-gray-800 pb-2'>Price Range</p>
               {priceRange.map((range, index)=>(
-                <CheckBox key={index} label={`$ ${range}`}/>
+                <CheckBox key={index} label={`₹ ${range}`}/>
               ))}
             </div>
 
