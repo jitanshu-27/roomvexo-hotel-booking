@@ -57,7 +57,7 @@ export const getOwnerRooms = async (req,res) => {
         res.json({success:true , rooms})
 
     } catch (error) {
-        res.json({success:true , message:error.message})
+        res.json({success:false , message:error.message})
     }
 }
 

@@ -16,12 +16,14 @@ connectCloudinary()
 const app = express()
 app.use(cors()) // Enable Cross-Origin Resource Sharing
 
+
+// API to Listen to Clerk Webhooks — needs RAW body (not JSON-parsed) for Svix signature verification
+app.use("/api/clerk", express.raw({ type: "application/json" }), clerkWebhook);
+
 // middleware
 app.use(express.json())
 app.use(clerkMiddleware())
 
-// API to Listen to Clerk Webhooks
-app.use("/api/clerk", clerkWebhook);
 
 app.get("/" , (req , res)=>res.send("Api is Working fine everything."))
 app.use('/api/user', userRouter)
