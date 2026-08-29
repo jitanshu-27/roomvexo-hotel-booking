@@ -1,9 +1,31 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Title from '../components/Title'
-import { assets, userBookingsDummyData } from '../assets/assets'
+import { assets } from '../assets/assets'
+import { useAppContext } from '../context/AppContax'
+import toast from 'react-hot-toast'
 
 const MyBookings = () => {
-    const [bookings, setBookings] = useState(userBookingsDummyData)
+    const {axios, getToken , user} = useAppContext()
+    const [bookings, setBookings] = useState([])
+
+    const fetchUserBookings = async () => {
+        try {
+            const {data} = await axios.get('/api/bookings/user',{ headers:{Authorization:`Bearer ${await getToken()}`}})
+            if(data.success){
+                setBookings(data.bookings)
+            }else{
+                toast.error(data.message)
+            }
+        } catch (error) {
+            toast.error(error.message)
+        }
+    }
+    useEffect(()=>{
+        if(user){
+            fetchUserBookings()
+        }
+    },[user])
+    
   return (
     <div className='py-28 md:pb-35 md:pt-32 px-4 md:px-16 lg:px-24 xl:px-32'>
       <Title title="My Bookings" subTitle="Easily manage your past, current , and upcoming hotel reservations in one place. Plan your trips seamlessly with just a new clicks" align="left"/>
@@ -20,7 +42,7 @@ const MyBookings = () => {
                 {/* Hotels Details */}
                 <div className='flex flex-col md:flex-row'>
                     <img src={booking.room.images[0]} alt="Hotel-image" className='md:w-44 rounded shadow object-cover'/>
-                        <div className='flex flex-col gap-1.5 max-md:mt-3 min-md:ml-4'>
+                        <div className='flex flex-col gap-1.5 max-md:mt-3 md:ml-4'>
                             <p className='font-playfair text-2xl'>{booking.hotel.name}
                             <span className='font-inter text-sm'> ({booking.room.roomType})</span>
                             </p>

@@ -38,7 +38,7 @@ import totalBookingIcon from "./totalBookingIcon.svg";
 import totalRevenueIcon from "./totalRevenueIcon.svg";
 import logo3 from "./logo3.png"
 import hostAvatar from './hostAvatar.png'
-
+import heroImage from './heroImage.png'
 export const assets = {
     searchIcon,
     userIcon,
@@ -72,7 +72,8 @@ export const assets = {
     totalBookingIcon,
     totalRevenueIcon,
     logo3,
-    hostAvatar
+    hostAvatar,
+    heroImage
 }
 
 export const cities = [

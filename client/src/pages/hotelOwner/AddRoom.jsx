@@ -18,10 +18,11 @@ const AddRoom = () => {
         roomtype:"",
         pricePerNight:0,
         amenities:{
-            'Free Wifi ': false,
-            'Free Breakfast ': false,
-            'Room Service ': false,
-            'Pool Access': false
+                    "Free WiFi": false,
+                    "Free Breakfast": false,
+                    "Room Service": false,
+                    "Mountain View": false,
+                    "Pool Access": false,
         }
     })
 
@@ -50,8 +51,6 @@ const AddRoom = () => {
                 })
 
                 const token = await getToken();
-
-                console.log("TOKEN:", token);
                 const {data} = await axios.post('/api/rooms', formData, {headers:{Authorization:`Bearer ${await getToken()}`}})
                 if(data.success){
                     toast.success(data.message)
@@ -59,11 +58,12 @@ const AddRoom = () => {
                         roomtype:'',
                         pricePerNight:0,
                         amenities:{
-                            'Free Wifi ': false,
-                            'Free Breakfast ': false,
-                            'Room Service ': false,
-                            'Pool Access': false
-                        }
+                                    "Free WiFi": false,
+                                    "Free Breakfast": false,
+                                    "Room Service": false,
+                                    "Mountain View": false,
+                                    "Pool Access": false,
+                                  }
                     })
                     setImages({1:null, 2:null , 3:null , 4:null})
                 }else{
