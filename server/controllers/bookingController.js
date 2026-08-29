@@ -1,3 +1,4 @@
+import resend from "../configs/resend.js";
 import Booking from "../models/Bookings.js"
 import Hotel from "../models/Hotel.js";
 import Room from "../models/Room.js";
@@ -54,8 +55,8 @@ export const createBooking = async (req,res) => {
         const timeDiff = checkOut.getTime() - checkIn.getTime()
         const nights = Math.ceil(timeDiff/(1000*3600*24))
         totalPrice *= nights
-        const booking = await Booking.create({
 
+        const booking = await Booking.create({
             user,
             room,
             hotel:roomData.hotel._id,
@@ -64,7 +65,32 @@ export const createBooking = async (req,res) => {
             checkOutDate,
             totalPrice,
         })
+        const mailOptions = {
+             from: "Roomvexo <onboarding@resend.dev>",
+             to: req.user.email,
+             subject: "Roomvexo Booking Confirmation",
+             html: `
+                    <h2>Booking Confirmed 🎉</h2>
 
+                    <p>Hello ${req.user.name || "Guest"},</p>
+
+                    <p>Your hotel booking has been successfully confirmed.</p>
+
+                    <h3>Booking Details</h3>
+
+                    <p><strong>Booking ID:</strong> ${booking._id}</p>
+                    <p><strong>Hotel:</strong> ${roomData.hotel.name}</p>
+                    <p><strong>Room ID:</strong> ${booking.room}</p>
+                    <p><strong>Check-in:</strong> ${booking.checkInDate.toDateString()}</p>
+                    <p><strong>Check-out:</strong> ${booking.checkOutDate.toDateString()}</p>
+                    <p><strong>Guests:</strong> ${booking.guests}</p>
+                    <p><strong>Total Price:</strong> ₹${booking.totalPrice}</p>
+                    <br />
+                    <p>Thank you for booking with Roomvexo! </p>
+                `
+        }
+
+        await resend.emails.send(mailOptions)
         res.json({success:true , message:"Booking created successfully"})
     } catch (error) {
         console.log(error)
@@ -79,9 +105,9 @@ export const getUserBookings = async (req,res) => {
     try {
         const user = req.user._id
         const bookings = await Booking.find({user}).populate("room hotel").sort({createdAt: -1})
-        res.json({succes:true , bookings})
+        res.json({success:true , bookings})
     } catch (error) {
-        res.json({succes:false , message:"Failed to fetch bookings"})
+        res.json({success:false , message:error.message})
     }
 }
 
@@ -94,6 +120,7 @@ export const getHotelBooking = async (req,res) => {
     const bookings = await Booking.find({hotel:hotel._id}).populate("room hotel user").sort({createdAt:-1})
     // Total Bookings
     const totalBookings = bookings.length
+    
     // Total Revenue
     const totalRevenue = bookings.reduce((acc,booking)=>acc+booking.totalPrice,0)
 

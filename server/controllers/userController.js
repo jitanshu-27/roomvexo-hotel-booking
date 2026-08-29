@@ -2,22 +2,22 @@
 export const getUserData = async (req , res) =>{
     try {
         const role = req.user.role
-        const recentSearchedCities = req.user.recentSearchedCities
-        res.json({success:true , role , recentSearchedCities})
+        const recentSearchCities = req.user.recentSearchCities
+        res.json({success:true , role , recentSearchCities})
     } catch (error) {
         res.json({success:false , message: error.message})
     }
 }
 
-export const storeRecentSearchedCities = async (req , res) => {
+export const storeRecentSearchCities = async (req , res) => {
     try {
-        const {recentSearchedCities} = req.body;
+        const {recentSearchCities} = req.body;
         const user = req.user
-        if(user.recentSearchedCities.length < 3){
-            user.recentSearchedCities.push(recentSearchedCities)
+        if(user.recentSearchCities.length < 3){
+            user.recentSearchCities.push(recentSearchCities)
         }else{
-            user.recentSearchedCities.shift()
-            user.recentSearchedCities.push(recentSearchedCities)
+            user.recentSearchCities.shift()
+            user.recentSearchCities.push(recentSearchCities)
         }
 
         await user.save()
