@@ -113,7 +113,7 @@ export const getUserBookings = async (req,res) => {
 
 export const getHotelBooking = async (req,res) => {
     try {
-        const hotel = await Hotel.findOne({owner:req.userId})
+        const hotel = await Hotel.findOne({owner:req.user._id})
     if(!hotel){
         return res.json({success:false,message:"No hotel found"})
     }
