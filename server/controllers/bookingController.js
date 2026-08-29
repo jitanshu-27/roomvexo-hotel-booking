@@ -72,7 +72,7 @@ export const createBooking = async (req,res) => {
              html: `
                     <h2>Booking Confirmed 🎉</h2>
 
-                    <p>Hello ${req.user.name || "Guest"},</p>
+                    <p>Hello ${req.user.username || "Guest"},</p>
 
                     <p>Your hotel booking has been successfully confirmed.</p>
 
@@ -113,9 +113,9 @@ export const getUserBookings = async (req,res) => {
 
 export const getHotelBooking = async (req,res) => {
     try {
-        const hotel = await Hotel.findOne({owner:req.auth.userId})
+        const hotel = await Hotel.findOne({owner:req.userId})
     if(!hotel){
-        return res.json({succes:false,message:"No hotel found"})
+        return res.json({success:false,message:"No hotel found"})
     }
     const bookings = await Booking.find({hotel:hotel._id}).populate("room hotel user").sort({createdAt:-1})
     // Total Bookings
@@ -124,8 +124,8 @@ export const getHotelBooking = async (req,res) => {
     // Total Revenue
     const totalRevenue = bookings.reduce((acc,booking)=>acc+booking.totalPrice,0)
 
-    res.json({succes:true , dashboardData:{totalBookings,totalRevenue,bookings}})
+    res.json({success:true , dashboardData:{totalBookings,totalRevenue,bookings}})
     } catch (error) {
-        res.json({succes:false,message:"Failed to fetch bookings"})
+        res.json({success:false,message:"Failed to fetch bookings"})
     }
 }
