@@ -2,17 +2,17 @@ import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { useAppContext } from '../context/AppContext';
 
-const ProtectedRoute = ({ children, allowedRole }) => {
-  const { isAuthenticated, user } = useAppContext();
+const ProtectedRoute = ({ children, requireOwner = false }) => {
+  const { user , isOwner } = useAppContext();
 
 
-  if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
-  }
-
-  if (allowedRole && user?.role !== allowedRole) {
+  if (!user) {
     return <Navigate to="/" replace />;
-  }
+}
+
+  if (requireOwner && !isOwner) {
+    return <Navigate to="/" replace />;
+}
 
   return children;
 };
