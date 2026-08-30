@@ -52,8 +52,10 @@ export const AppProvider = ({children}) => {
       useEffect(()=>{
         if(user){
             fetchUser();
+        }else{
+         setIsOwner(false)
         }
-      },[user])
+        },[user])
 
       useEffect(()=>{
         fetchRooms()
