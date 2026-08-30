@@ -3,7 +3,7 @@ import { Link, useLocation, } from "react-router-dom";
 import { useEffect , useState } from "react";
 import { assets } from "../assets/assets";
 import { useClerk, UserButton } from "@clerk/clerk-react";
-import { useAppContext } from "../context/AppContax";
+import { useAppContext } from "../context/AppContext";
 
 const BookIcon = ()=>{
     return (

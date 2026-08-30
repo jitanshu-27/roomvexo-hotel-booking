@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import HotelCard from './HotelCard'
 import Title from './Title'
-import { useAppContext } from '../context/AppContax'
+import { useAppContext } from '../context/AppContext'
 
 
 const RecommendedHotels = () => {

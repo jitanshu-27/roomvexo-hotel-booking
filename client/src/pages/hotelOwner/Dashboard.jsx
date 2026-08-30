@@ -2,7 +2,7 @@ import toast from 'react-hot-toast'
 import React, { useEffect, useState } from 'react'
 import Title from '../../components/Title'
 import { assets } from '../../assets/assets'
-import { useAppContext } from '../../context/AppContax'
+import { useAppContext } from '../../context/AppContext'
 
 const Dashboard = () => {
     const {currency, user, getToken, axios} = useAppContext() 
