@@ -62,11 +62,11 @@ const RoomDetails = () => {
                         navigate('/my-bookings')
                         scrollTo(0,0)
                     }else{
-                        toast.error(error.message)
+                        toast.error(data.message)
                     }
             }
         } catch (error) {
-            toast.error(data.message)
+            toast.error(error.message)
         }
     }
 

@@ -20,6 +20,85 @@ const MyBookings = () => {
             toast.error(error.message)
         }
     }
+
+     const loadRazorpayScript = () => {
+        return new Promise((resolve) => {
+            if (window.Razorpay) {
+                resolve(true)
+                return
+            }
+            const script = document.createElement('script')
+            script.src = 'https://checkout.razorpay.com/v1/checkout.js'
+            script.onload = () => resolve(true)
+            script.onerror = () => resolve(false)
+            document.body.appendChild(script)
+        })
+    }
+
+     const handlePayment = async (booking) => {
+        try {
+            const scriptLoaded = await loadRazorpayScript()
+            if (!scriptLoaded) {
+                toast.error('Failed to load payment gateway. Check your connection.')
+                return
+            }
+ 
+            const { data } = await axios.post(
+                '/api/payment/razorpay/create-order',
+                { bookingId: booking._id },
+                { headers: { Authorization: `Bearer ${await getToken()}` } }
+            )
+ 
+            if (!data.success) {
+                toast.error(data.message)
+                return
+            }
+ 
+            const options = {
+                key: data.keyId,
+                amount: data.order.amount,
+                currency: data.order.currency,
+                name: 'Roomvexo',
+                description: `Booking payment for ${booking.hotel.name}`,
+                order_id: data.order.id,
+                handler: async (response) => {
+                    try {
+                        const verifyRes = await axios.post(
+                            '/api/payment/razorpay/verify',
+                            {
+                                razorpay_order_id: response.razorpay_order_id,
+                                razorpay_payment_id: response.razorpay_payment_id,
+                                razorpay_signature: response.razorpay_signature,
+                                bookingId: booking._id,
+                            },
+                            { headers: { Authorization: `Bearer ${await getToken()}` } }
+                        )
+                        if (verifyRes.data.success) {
+                            toast.success('Payment successful!')
+                            fetchUserBookings()
+                        } else {
+                            toast.error(verifyRes.data.message)
+                        }
+                    } catch (error) {
+                        toast.error(error.message)
+                    }
+                },
+                prefill: {
+                    name: user?.fullName || '',
+                    email: user?.primaryEmailAddress?.emailAddress || '',
+                },
+                theme: {
+                    color: '#2563EB',
+                },
+            }
+ 
+            const razorpay = new window.Razorpay(options)
+            razorpay.open()
+        } catch (error) {
+            toast.error(error.message)
+        }
+    }
+
     useEffect(()=>{
         if(user){
             fetchUserBookings()
@@ -82,7 +161,7 @@ const MyBookings = () => {
                         </p>
                     </div>
                     {!booking.isPaid && (
-                        <button className='px-4 py-1.5 mt-4 text-xs border border-gray-400 rounded-full hover:bg-gray-50 transition-all cursor-pointer'>
+                        <button  onClick={()=>handlePayment(booking)} className='px-4 py-1.5 mt-4 text-xs border border-gray-400 rounded-full hover:bg-gray-50 transition-all cursor-pointer'>
                             Pay Now
                         </button>
                     )}
