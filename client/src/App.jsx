@@ -1,23 +1,25 @@
 import React from 'react'
+import { Suspense, lazy } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom'
 import Navbar from './components/Navbar'
-import Home from './pages/Home'
 import Footer from './components/Footer'
-import Allrooms from './pages/Allrooms'
-import RoomDetails from './pages/RoomDetails'
-import MyBookings from './pages/MyBookings'
 import HotelReg from './components/HotelReg'
 import Layout from './pages/hotelOwner/Layout'
-import Dashboard from './pages/hotelOwner/Dashboard'
-import AddRoom from './pages/hotelOwner/AddRoom'
-import ListRoom from './pages/hotelOwner/ListRoom'
 import {Toaster} from "react-hot-toast"
-import { useAppContext } from './context/AppContax'
+import { useAppContext } from './context/AppContext'
+
+const Home = lazy(() => import('./pages/Home'));
+const Allrooms = lazy(() => import('./pages/Allrooms'));
+const RoomDetails = lazy(() => import('./pages/RoomDetails'));
+const MyBookings = lazy(() => import('./pages/MyBookings'));
+const Dashboard = lazy(() => import('./pages/hotelOwner/Dashboard'));
+const AddRoom = lazy(() => import('./pages/hotelOwner/AddRoom'));
+const ListRoom = lazy(() => import('./pages/hotelOwner/ListRoom'));
 
 
 const App = () => {
   const location = useLocation()
-  const isOwnerPath = location.pathname.includes("owner")
+  const isOwnerPath = location.pathname.startsWith("/owner")
   const {showHotelReg} = useAppContext()
   return (
     <div>
@@ -25,6 +27,7 @@ const App = () => {
       {!isOwnerPath && <Navbar />}
       {showHotelReg && <HotelReg/>}
       <div className='min-h-[70vh]'>
+      <Suspense fallback={<div className="flex justify-center items-center h-[70vh] text-gray-500">Loading...</div>}>
        <Routes >
           <Route path='/'element={<Home/>}/>
           <Route path='/rooms'element={<Allrooms/>}/>
@@ -36,8 +39,9 @@ const App = () => {
             <Route path='list-room' element={<ListRoom/>}/>
           </Route>
        </Routes>
+       </Suspense>
       </div>
-      <Footer/>
+      {!isOwnerPath && <Footer />}
     </div>
   )
 }
