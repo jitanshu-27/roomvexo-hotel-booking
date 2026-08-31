@@ -209,19 +209,19 @@ For a complete end-to-end test, use **two separate accounts** — one as a hotel
 ## Screenshots
 
 ### Home Page
-![Home Page](./screenshots/home.png)
+![Home Page](./Screenshots/home.png)
 
 ### Featured Destinations
-![Featured Destinations](./screenshots/featured-destination.png)
+![Featured Destinations](./Screenshots/featured-destination.png)
 
 ### Hotel Listings with Filters
-![Hotel Listings](./screenshots/rooms-filters.png)
+![Hotel Listings](./Screenshots/rooms-filters.png)
 
 ### Owner Dashboard
-![Owner Dashboard](./screenshots/owner-dashboard.png)
+![Owner Dashboard](./Screenshots/owner-dashboard.png)
 
 ### My Bookings
-![My Bookings](./screenshots/my-bookings.png)
+![My Bookings](./Screenshots/my-bookings.png)
 
 ---
 
