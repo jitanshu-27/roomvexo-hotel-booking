@@ -126,7 +126,7 @@ export const getHotelBooking = async (req,res) => {
     const totalBookings = bookings.length
     
     // Total Revenue
-    const totalRevenue = bookings.reduce((acc,booking)=>acc+booking.totalPrice,0)
+    const totalRevenue = bookings.filter(booking => booking.isPaid).reduce((acc,booking)=>acc+booking.totalPrice,0)
 
     res.json({success:true , dashboardData:{totalBookings,totalRevenue,bookings}})
     } catch (error) {
