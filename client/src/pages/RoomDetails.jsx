@@ -25,9 +25,8 @@ const RoomDetails = () => {
     // Check if the Room is Available
     const checkAvailability = async () => {
         try {
-        // check is Check-In Date is greater than Check-Out Date
-        if(checkInDate > checkOutDate){
-            toast.error('Check-In Date should be less than Check-Out Date')
+        if(checkInDate >= checkOutDate){                             // check is Check-In Date is greater than Check-Out Date
+            toast.error('Check-Out Date must be after Check-In Date')
             return;
         }
         const {data} = await axios.post('/api/bookings/check-availability',{room:id,checkInDate,checkOutDate})

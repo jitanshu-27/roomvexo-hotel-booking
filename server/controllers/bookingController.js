@@ -54,6 +54,10 @@ export const createBooking = async (req,res) => {
         const checkOut = new Date(checkOutDate)
         const timeDiff = checkOut.getTime() - checkIn.getTime()
         const nights = Math.ceil(timeDiff/(1000*3600*24))
+
+        if(nights < 1){
+            return res.json({success:false , message:"Check-Out date must be after Check-In date"})
+        }
         totalPrice *= nights
 
         const booking = await Booking.create({
